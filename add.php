@@ -25,15 +25,19 @@ if (isset($_POST['Submit'])) {
 
     if (requireInput($name) && requireInput($email) && requireInput($password)) {
         if (minInput($name, 3) && maxInput($password, 20)) {
+            if (valInput($email)) {
+                $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "INSERT INTO `users`(`user_name`, `user_email`, `user_password`)
+                    VALUES ('$name','$email','$password_hash')";
 
-            $spl = "INSERT INTO `users`(`user_name`, `user_email`, `user_password`)
-            VALUES ('$name','$email','$password_hash')";
-            $result = mysqli_query($my_sqli, $spl);
-
-            if ($result) {
-                $success = "Addid Successfully ";
+                $result = mysqli_query($my_sqli, $sql);
+                if ($result) {
+                    $success = "Addid Successfully ";
+                    header("refresh:3;url=index.php");
+                }
+            } else {
+                $ERROR = "ERROR2";
             }
         } else {
             $ERROR = "ERROR2";
@@ -42,8 +46,6 @@ if (isset($_POST['Submit'])) {
         $ERROR = "ERROR1";
     }
 }
-
-
 ?>
 
 <h1 class="text-center col-12 bg-info py-3 text-white my-2">Add New User</h1>
@@ -51,7 +53,7 @@ if (isset($_POST['Submit'])) {
     <form class="my-2 p-3 border" method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
 
         <?php if ($ERROR) { ?>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="text-center alert alert-warning alert-dismissible fade show" role="alert">
                 <?php
                 echo $ERROR;
                 ?>
@@ -59,7 +61,7 @@ if (isset($_POST['Submit'])) {
         <?php } ?>
 
         <?php if ($success) { ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
                 <?php
                 echo $success;
                 ?>
@@ -77,7 +79,8 @@ if (isset($_POST['Submit'])) {
         // }
         ?>
         <!-- </div> -->
-        <?php //} ?>
+        <?php //} 
+        ?>
 
         <div class="form-group">
             <label for="exampleInputName1">Full Name</label>

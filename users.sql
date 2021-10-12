@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2021 at 09:25 AM
+-- Generation Time: Oct 12, 2021 at 01:22 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -39,9 +39,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_password`) VALUES
-(1, 'Ahmed Al Sharkawy', 'ahmedmaher0110@gmail.com', '$2y$10$ZBBVdwsB2Mwdo/Lt.d07jegpUbPFeh5xwqxjhdtettkpEWzYgqnoe'),
-(2, 'ali mohamed', 'titomedo0110@gmail.com', '$2y$10$nZgidf/B7M04ltkMgmNWFOkj5LgQk54.jCta64Vc58tNszvM3CwFq'),
-(3, 'omrzdn', 'omrzdn@gmail.com', '$2y$10$aqXWf.o1Ooz0EZfDhdCq4ecfeB6JAJP2CqOFiz94.g5gmjesWFid2');
+(1, 'Ahmed Al Sharkawy', 'ahmedmaher0110@gmail.com', '$2y$10$hMoC1wKrDjgI4YrOL5ALr.hj7xHUmjVNbT0BDEObMJzuPAroigF/u'),
+(2, 'omrzd', 'omrzdn@gmail.com', '$2y$10$O3y5EBjvKBwlysRheNVJxu9wAq6UhezCu5a7fC8KgbF4ojyJ8PbDK'),
+(3, 'ali mohamed', 'titomedo0110@gmail.com', '$2y$10$z2ssjZ4nENlnWojUe7m5quGdIV18lvbbzY.pdDWLWexASfsyW7Ote');
 
 --
 -- Indexes for dumped tables

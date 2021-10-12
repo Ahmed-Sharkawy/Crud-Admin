@@ -29,14 +29,15 @@ $success = "";
         return $str;
     }
 
+    
     function minInput($value, $min)
     {
-
         if (strlen($value) > $min) {
             return true;
         }
         return false;
     }
+
 
     function maxInput($value, $max)
     {
@@ -46,4 +47,13 @@ $success = "";
         }
         return false;
     }
-    ?>
+
+
+    function valInput($email)
+    {
+        if (filter_var($email,FILTER_VALIDATE_EMAIL)) {
+            return true;
+        }
+        return false;
+    }
+?>
