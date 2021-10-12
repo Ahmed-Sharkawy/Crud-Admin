@@ -24,8 +24,22 @@ if (isset($_POST['Submit'])) {
     $password = santInputSTRING($_POST['password']);
 
     if (requireInput($name) && requireInput($email) && requireInput($password)) {
+        if (minInput($name, 3) && maxInput($password, 20)) {
+
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $spl = "INSERT INTO `users`(`user_name`, `user_email`, `user_password`)
+            VALUES ('$name','$email','$password_hash')";
+            $result = mysqli_query($my_sqli, $spl);
+
+            if ($result) {
+                $success = "Addid Successfully ";
+            }
+        } else {
+            $ERROR = "ERROR2";
+        }
     } else {
-        $ERROR = "ERROR";
+        $ERROR = "ERROR1";
     }
 }
 
@@ -44,9 +58,18 @@ if (isset($_POST['Submit'])) {
             </div>
         <?php } ?>
 
+        <?php if ($success) { ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php
+                echo $success;
+                ?>
+            </div>
+        <?php } ?>
+
         <!-- ERROR El Zero -->
 
-        <?php // if (!empty($formErrores)) { ?>
+        <?php // if (!empty($formErrores)) { 
+        ?>
         <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert"> -->
         <?php
         // foreach ($formErrores as $ERROR) {
