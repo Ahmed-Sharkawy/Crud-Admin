@@ -1,6 +1,6 @@
 <?php
 
-    $my_sqli = mysqli_connect("localhost","root","", "crud_php_2");
+    $my_sqli = new mysqli("localhost","root","", "crud_php_2");
 
 
     if (!$my_sqli) {

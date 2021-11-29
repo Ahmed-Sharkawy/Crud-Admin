@@ -1,6 +1,6 @@
-<?php include('inc/header.php'); ?>
-<?php include('inc/validation.php'); ?>
 <?php
+include('inc/header.php'); 
+include('inc/validation.php');
 if (isset($_POST['submit'])) {
 
     $name = santInputSTRING($_POST['name']);

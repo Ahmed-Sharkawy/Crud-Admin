@@ -1,4 +1,5 @@
-<?php include('inc/header.php');
+<?php 
+include('inc/header.php');
 
     if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
         header("location: index.php");

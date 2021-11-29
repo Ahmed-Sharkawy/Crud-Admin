@@ -19,7 +19,7 @@ $result = mysqli_query($my_sqli, $sql);
             </thead>
             <tbody>
                 <?php if (mysqli_num_rows($result) > 0) : ?>
-                    <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                    <?php while ($row = $result->fetch_array()) : ?>
                         <tr>
                             <th><?php echo $row['user_id']; ?></th>
                             <td><?php echo $row['user_name']; ?></td>

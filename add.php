@@ -1,4 +1,5 @@
-<?php include('inc/header.php');
+<?php 
+include('inc/header.php');
 include('inc/validation.php');
 
 if (isset($_POST['Submit'])) {
