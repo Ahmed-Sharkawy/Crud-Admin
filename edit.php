@@ -1,13 +1,19 @@
-<?php 
+<?
+ob_start();
 include('inc/header.php');
+include('inc/nav.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+}
 
     if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
         header("location: index.php");
-            }
-                $id = $_GET['id'];
-                $sql = "SELECT * FROM `users` WHERE `user_id`=$id limit 1 ";
-                $result = mysqli_query($my_sqli, $sql);
-                $check = mysqli_num_rows($result);
+    }
+        $id = $_GET['id'];
+        $sql = "SELECT * FROM `users` WHERE `user_id`=$id limit 1 ";
+        $result = mysqli_query($my_sqli, $sql);
+        $check = mysqli_num_rows($result);
             if (!$check) {
                 header("refresh:2;url=index.php");
             }
@@ -35,4 +41,7 @@ include('inc/header.php');
     </form>
 </div>
 
-<?php include('inc/footer.php'); ?>
+<?php
+include('inc/footer.php');
+ob_end_flush();
+?>

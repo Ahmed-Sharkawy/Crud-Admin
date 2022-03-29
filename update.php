@@ -1,6 +1,13 @@
 <?php
-include('inc/header.php'); 
+ob_start();
+include('inc/header.php');
+include('inc/nav.php');
 include('inc/validation.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+}
+
 if (isset($_POST['submit'])) {
 
     $name = santInputSTRING($_POST['name']);
@@ -11,10 +18,10 @@ if (isset($_POST['submit'])) {
             if (valInput($email)) {
                 $id = $_POST['id'];
                 if ($password) {
-                    
-                    $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-                    $sql = "UPDATE `users` SET `user_name`='$name', `user_email`='$email', `user_password`='$password_hash' 
+                    $password_hash = sha1($password);
+
+                    $sql = "UPDATE `users` SET `user_name`='$name', `user_email`='$email', `user_password`='$password_hash'
                         WHERE `user_id`='$id'";
                 } else {
                     $sql = "UPDATE `users` SET `user_name`='$name', `user_email`='$email'
@@ -28,33 +35,38 @@ if (isset($_POST['submit'])) {
                     header('refresh:2;url=index.php');
                 }
             } else {
-                $ERROR = "ERROR3";
+                $ERROR = "Email Verification";
             }
         } else {
-            $ERROR = "ERROR2";
+            $ERROR = "Verify that the field contains more than five characters";
         }
     } else {
-        $ERROR = "ERROR1";
+        $ERROR = "Make sure to fill in all fields";
     }
+} else {
+    header('Location: index.php');
 }
 ?>
 
 <h1 class="text-center col-12 bg-info py-3 text-white my-2">update info About User</h1>
-<?php if ($ERROR) { ?>
+<?php if ($ERROR) : ?>
     <div class="text-center alert alert-warning alert-dismissible fade show" role="alert">
         <?php
         echo $ERROR;
         ?>
     </div>
-    <a href="javascript:history.go(-1)" class="btn btn-primary"><< Go Back</a>
-<?php } ?>
+    <a href="javascript:history.go(-1)" class="btn btn-primary"> << Go Back</a>
+<?php endif; ?>
 
-<?php if ($success) { ?>
+<?php if ($success) : ?>
     <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
         <?php
         echo $success;
         ?>
     </div>
-<?php } ?>
+<?php endif; ?>
 
-<?php include('inc/footer.php'); ?>
+<?php
+include('inc/footer.php');
+ob_end_flush();
+?>

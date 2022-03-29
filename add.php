@@ -1,23 +1,29 @@
-<?php 
+<?php
+ob_start();
 include('inc/header.php');
+include('inc/nav.php');
 include('inc/validation.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+}
 
 if (isset($_POST['Submit'])) {
 
-    // $name = trim(filter_var($_POST['name'], FILTER_SANITIZE_STRING));
-    // $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
-    // $password = trim(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
-    // $formErrores = [];
+    $name = trim(filter_var($_POST['name'], FILTER_SANITIZE_STRING));
+    $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
+    $password = trim(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
+    $formErrores = [];
 
-    // if (strlen($name) < 5) {
-    //     $formErrores[] = "A field cannot be left <strong>username!</strong> blank";
-    // }
-    // if (strlen($email) == 0) {
-    //     $formErrores[] = "A field cannot be left <strong>email!</strong> blank";
-    // }
-    // if (strlen($password) < 5) {
-    //     $formErrores[] = "A field cannot be left <strong>password!</strong> blank";
-    // } 
+    if (strlen($name) < 5) {
+        $formErrores[] = "A field cannot be left <strong>username!</strong> blank";
+    }
+    if (strlen($email) == 0) {
+        $formErrores[] = "A field cannot be left <strong>email!</strong> blank";
+    }
+    if (strlen($password) < 5) {
+        $formErrores[] = "A field cannot be left <strong>password!</strong> blank";
+    }
 
 
     $name = santInputSTRING($_POST['name']);
@@ -27,7 +33,7 @@ if (isset($_POST['Submit'])) {
     if (requireInput($name) && requireInput($email) && requireInput($password)) {
         if (minInput($name, 3) && maxInput($password, 20)) {
             if (valInput($email)) {
-                $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                $password_hash = sha1($password);
 
                 $sql = "INSERT INTO `users`(`user_name`, `user_email`, `user_password`)
                     VALUES ('$name','$email','$password_hash')";
@@ -38,13 +44,13 @@ if (isset($_POST['Submit'])) {
                     header("refresh:3;url=index.php");
                 }
             } else {
-                $ERROR = "ERROR2";
+                $ERROR = "Email Verification";
             }
         } else {
-            $ERROR = "ERROR2";
+            $ERROR = "Verify that the field contains more than five characters";
         }
     } else {
-        $ERROR = "ERROR1";
+        $ERROR = "Make sure to fill in all fields";
     }
 }
 ?>
@@ -71,16 +77,16 @@ if (isset($_POST['Submit'])) {
 
         <!-- ERROR El Zero -->
 
-        <?php // if (!empty($formErrores)) { 
+        <?php  if (!empty($formErrores)) {
         ?>
-        <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert"> -->
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <?php
-        // foreach ($formErrores as $ERROR) {
-        // echo $ERROR . "<br>";
-        // }
+            foreach ($formErrores as $ERROR) {
+            echo $ERROR . "<br>";
+            }
         ?>
-        <!-- </div> -->
-        <?php //} 
+        </div>
+        <?php }
         ?>
 
         <div class="form-group">
@@ -100,4 +106,7 @@ if (isset($_POST['Submit'])) {
     </form>
 </div>
 
-<?php include('inc/footer.php'); ?>
+<?php
+include('inc/footer.php');
+ob_end_flush();
+?>

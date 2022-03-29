@@ -1,5 +1,12 @@
-<?php 
+<?php
+ob_start();
 include('inc/header.php');
+include('inc/nav.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+}
+
     if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
         header("location: index.php");
         }
@@ -20,4 +27,7 @@ include('inc/header.php');
     <h1 class="text-center col-12 bg-danger py-3 text-white my-2">User Have Benn Deleted </h1>
         <?php header("refresh:2;url=index.php")?>
 
-<?php include('inc/footer.php'); ?>
+<?php
+include('inc/footer.php');
+ob_end_flush();
+?>

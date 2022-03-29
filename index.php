@@ -1,4 +1,12 @@
-<?php include('inc/header.php');
+<?php
+ob_start();
+include('inc/header.php');
+include('inc/nav.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+}
+
 $sql = "SELECT * FROM `users`";
 $result = mysqli_query($my_sqli, $sql);
 
@@ -38,4 +46,7 @@ $result = mysqli_query($my_sqli, $sql);
     </div>
 </div>
 
-<?php include('inc/footer.php'); ?>
+<?php
+include('inc/footer.php');
+ob_end_flush();
+?>

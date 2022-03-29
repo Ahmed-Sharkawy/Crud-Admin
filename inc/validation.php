@@ -9,7 +9,7 @@ $success = "";
 
     function requireInput($value){
         $str = trim($value);
-        if(strlen($str) > 0){
+        if(strlen($str) > 3){
             return true;
         }
         return false;
@@ -29,7 +29,7 @@ $success = "";
         return $str;
     }
 
-    
+
     function minInput($value, $min)
     {
         if (strlen($value) > $min) {
